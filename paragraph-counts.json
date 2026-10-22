@@ -1,0 +1,76 @@
+{
+  "before": {
+    "phase": "before",
+    "measurements": [
+      {
+        "name": "Quote",
+        "source": "- > a\n  >\n  > b\n- c\n",
+        "html": "<ul>\n<li>\n<blockquote>\na\nb\n</blockquote>\n</li>\n<li>\nc\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 2,
+        "actual_paragraphs": 0
+      },
+      {
+        "name": "Div",
+        "source": "- ::: d\n  a\n  :::\n",
+        "html": "<ul>\n<li>\n<div class=\"d\">\na\n</div>\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 1,
+        "actual_paragraphs": 0
+      },
+      {
+        "name": "Quote override",
+        "source": "- > a\n  >\n  > b\n- c\n",
+        "html": "<ul>\n<li>\n<blockquote>\na\nb\n</blockquote>\n</li>\n<li>\nc\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 2,
+        "actual_paragraphs": 0
+      },
+      {
+        "name": "Div override",
+        "source": "- ::: d\n  a\n  :::\n",
+        "html": "<ul>\n<li>\n<div class=\"d\">\na\n</div>\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 1,
+        "actual_paragraphs": 0
+      }
+    ]
+  },
+  "after": {
+    "phase": "after",
+    "measurements": [
+      {
+        "name": "Quote",
+        "source": "- > a\n  >\n  > b\n- c\n",
+        "html": "<ul>\n<li>\n<blockquote>\n<p>a</p>\n<p>b</p>\n</blockquote>\n</li>\n<li>\nc\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 2,
+        "actual_paragraphs": 2
+      },
+      {
+        "name": "Div",
+        "source": "- ::: d\n  a\n  :::\n",
+        "html": "<ul>\n<li>\n<div class=\"d\">\n<p>a</p>\n</div>\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 1,
+        "actual_paragraphs": 1
+      },
+      {
+        "name": "Quote override",
+        "source": "- > a\n  >\n  > b\n- c\n",
+        "html": "<ul>\n<li>\n<blockquote>\n<p>a</p>\n<p>b</p>\n</blockquote>\n</li>\n<li>\nc\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 2,
+        "actual_paragraphs": 2
+      },
+      {
+        "name": "Div override",
+        "source": "- ::: d\n  a\n  :::\n",
+        "html": "<ul>\n<li>\n<div class=\"d\">\n<p>a</p>\n</div>\n</li>\n</ul>\n",
+        "list_tight": true,
+        "expected_paragraphs": 1,
+        "actual_paragraphs": 1
+      }
+    ]
+  }
+}
