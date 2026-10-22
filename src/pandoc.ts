@@ -195,9 +195,18 @@ class PandocRenderer {
       case "list_item": // should be handled at "list" above
         break;
 
-      case "para":
-        elts.push({ t: "Para", c: this.toPandocChildren(node) });
+      case "para": {
+        const para = { t: "Para", c: this.toPandocChildren(node) };
+        const attrs = toPandocAttr(node);
+        if (attrs[0] || attrs[1].length || attrs[2].length) {
+          // Pandoc's Para has no attributes; use its Djot wrapper convention.
+          attrs[2].unshift(["wrapper", "1"]);
+          elts.push({ t: "Div", c: [attrs, [para]] });
+        } else {
+          elts.push(para);
+        }
         break;
+      }
 
       case "heading":
         elts.push({ t: "Header", c: [node.level, toPandocAttr(node),
