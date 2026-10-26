@@ -1195,6 +1195,29 @@ describe("PandocRenderer", () => {
     ]);
   });
 
+  it("keeps task list checkboxes inside attributed paragraphs", () => {
+    const ast = parse("- [x] {.todo}\n  hello\n");
+    const pandoc = toPandoc(ast);
+    const before = JSON.stringify(pandoc);
+    expect(pandoc.blocks).toStrictEqual([
+      {t: "BulletList", c: [[
+        {t: "Div", c: [["", ["todo"], [["wrapper", "1"]]], [
+          {t: "Para", c: [{t: "Str", c: "☒"}, {t: "Space"},
+                          {t: "Str", c: "hello"}]},
+        ]]},
+      ]]},
+    ]);
+    expect(fromPandoc(pandoc).children[0]).toMatchObject({
+      tag: "task_list", children: [{
+        tag: "task_list_item", checkbox: "checked", children: [{
+          tag: "div", attributes: {class: "todo", wrapper: "1"},
+          children: [{tag: "para", children: [{tag: "str", text: "hello"}]}],
+        }],
+      }],
+    });
+    expect(JSON.stringify(pandoc)).toEqual(before);
+  });
+
   it("renders task list items with empty content", () => {
     const ast = parse("- [x]\n- [ ] done\n", {});
     expect(toPandoc(ast)).toStrictEqual(
